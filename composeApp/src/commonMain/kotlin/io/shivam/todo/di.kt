@@ -1,5 +1,7 @@
 package io.shivam.todo
 
+import io.shivam.todo.data.TodoRepositoryImpl
+import io.shivam.todo.domain.TodoRepository
 import org.koin.core.context.startKoin
 import org.koin.core.context.stopKoin
 import org.koin.dsl.module
@@ -7,8 +9,8 @@ import org.koin.dsl.module
 private var isKoinInitialized = false
 
 val appModule = module {
-    single {
-
+    single<TodoRepository> {
+        TodoRepositoryImpl()
     }
     factory {
 
