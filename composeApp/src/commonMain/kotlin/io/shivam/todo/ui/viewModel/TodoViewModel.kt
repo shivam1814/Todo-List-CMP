@@ -20,7 +20,6 @@ class TodoViewModel(private val repository: TodoRepository) : ViewModel() {
         }
     }
 
-
     fun addTodo(todo: TodoItem) {
         viewModelScope.launch {
             repository.addTodo(todo)

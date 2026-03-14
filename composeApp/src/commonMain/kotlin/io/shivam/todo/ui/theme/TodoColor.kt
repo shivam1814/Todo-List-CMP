@@ -7,7 +7,10 @@ enum class TodoColor(val color: Color) {
     Primary(Color(0xFF5F27FF)),
     Secondary(Color(0xFF6E6A7C)),
     Dark(Color(0xFF24252C)),
-    Light(Color(0xFFFAFAFA))
+    Light(Color(0xFFFAFAFA)),
+    Cream(Color(0xFFFFFEF0)), // Cream center
+    SoftCyan(Color(0xFFE8F5F0)), // Soft cyan
+    LightBlue(Color(0xFFF0F8FF))
 
 
 }
