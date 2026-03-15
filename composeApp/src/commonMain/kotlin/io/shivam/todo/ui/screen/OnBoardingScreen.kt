@@ -33,6 +33,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import io.shivam.todo.ui.components.CustomButton
 import io.shivam.todo.ui.theme.TodoColor
 import org.jetbrains.compose.resources.painterResource
 import todo_list.composeapp.generated.resources.Res
@@ -96,6 +97,13 @@ fun OnBoardingScreen() {
                     lineHeight = 22.sp
                 )
                 Spacer(modifier = Modifier.height(32.dp))
+
+                // CTA Button
+                CustomButton(
+                    onClick = {},
+                    text = "Let's Start",
+                    modifier = Modifier.fillMaxWidth()
+                )
 
             }
 
