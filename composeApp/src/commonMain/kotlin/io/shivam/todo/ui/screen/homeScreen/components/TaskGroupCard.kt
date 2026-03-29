@@ -1,0 +1,130 @@
+package io.shivam.todo.ui.screen.homeScreen.components
+
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Card
+import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.Icon
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import io.shivam.todo.data.model.TaskGroup
+import io.shivam.todo.data.model.TaskGroupCategory
+import io.shivam.todo.ui.theme.BodyLarge
+import io.shivam.todo.ui.theme.BodySmall
+import io.shivam.todo.ui.theme.Spacing
+import io.shivam.todo.ui.theme.TodoColor
+import io.shivam.todo.ui.uiutils.HSpacer
+import io.shivam.todo.ui.uiutils.VSpacer
+
+@Composable
+@Preview(showBackground = false)
+fun TaskGroupCard(
+    taskGroup: TaskGroup = TaskGroup(
+        id = "1",
+        category = TaskGroupCategory.OfficeProject,
+        taskCount = 23,
+        completionPercentage = 70
+    )
+) {
+
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .clip(RoundedCornerShape(Spacing.s4))
+//            .background(color = TodoColor.Primary.color)
+//            .padding(vertical = Spacing.s2)
+    ) {
+
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .background(color = TodoColor.Light.color)
+                .padding(Spacing.s4),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+
+            Row(
+                modifier = Modifier
+                    .weight(1f),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+
+                Box(
+                    modifier = Modifier.size(Spacing.s8)
+                        .background(
+                            color = taskGroup.category.color.copy(alpha = 0.15f),
+                            shape = CircleShape
+                        ),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Icon(
+                        imageVector = taskGroup.category.icon,
+                        contentDescription = taskGroup.category.displayName,
+                        tint = taskGroup.category.color,
+                        modifier = Modifier.size(Spacing.s4)
+                    )
+                }
+                HSpacer(Spacing.s4)
+                Column {
+                    Text(
+                        text = taskGroup.category.displayName,
+                        style = BodyLarge().copy(
+                            fontWeight = FontWeight.SemiBold
+                        )
+                    )
+                    VSpacer(Spacing.s1)
+                    Text(
+                        text = taskGroup.taskCount.toString() + " Tasks",
+                        style = BodySmall().copy(
+                            color = TodoColor.Secondary.color
+                        )
+                    )
+                }
+
+            }
+
+            Box(
+                modifier = Modifier.size(Spacing.s13),
+                contentAlignment = Alignment.Center
+            ) {
+                CircularProgressIndicator(
+                    modifier = Modifier.size(Spacing.s18),
+                    strokeWidth = 6.dp,
+                    progress = { taskGroup.completionPercentage / 100f },
+                    color = taskGroup.category.color,
+                    trackColor = taskGroup.category.color.copy(alpha = 0.2f)
+                )
+                Text(
+                    text = "${taskGroup.completionPercentage}%",
+                    style = TextStyle(
+                        fontSize = 16.sp,
+                        fontWeight = FontWeight.Bold,
+                        color = TodoColor.Dark.color
+                    )
+                )
+
+            }
+
+        }
+
+    }
+
+
+}

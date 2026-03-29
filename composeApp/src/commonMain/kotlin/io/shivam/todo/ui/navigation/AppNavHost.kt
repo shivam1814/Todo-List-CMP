@@ -10,10 +10,12 @@ import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import io.shivam.todo.ui.screen.OnBoardingScreen
+import io.shivam.todo.ui.screen.homeScreen.HomeScreen
 
 @Composable
 fun AppNavHost(
-    startDestination: NavRoute = NavRoute.SplashScreen,
+    startDestination: NavRoute = NavRoute.Home,
     navController: NavHostController
 ) {
 
@@ -22,9 +24,11 @@ fun AppNavHost(
         startDestination = startDestination,
     ) {
 
-        composable<NavRoute.SplashScreen> {
-            abc()
-        }
+        composable<NavRoute.SplashScreen> { abc() }
+        composable<NavRoute.Onboarding> { OnBoardingScreen() }
+        composable<NavRoute.HomeScreen> {  }
+        composable<NavRoute.TodoList> {  }
+        composable<NavRoute.Home> { HomeScreen() }
 
     }
 
