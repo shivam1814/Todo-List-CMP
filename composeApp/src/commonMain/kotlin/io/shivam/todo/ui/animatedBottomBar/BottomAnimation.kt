@@ -76,9 +76,9 @@ import kotlinx.coroutines.launch
  */
 @Composable
 fun CurvedBottomNavigation(
+    modifier: Modifier = Modifier.fillMaxSize(),
     items: List<NavItem>,
     selectedIndex: Int,
-    modifier: Modifier = Modifier.fillMaxSize(),
     bottomBarAlignment: Alignment = Alignment.BottomCenter,
     curveAnimationType: CurveAnimationType = CurveAnimationType.SMOOTH,
     animationDuration: Int = 300,

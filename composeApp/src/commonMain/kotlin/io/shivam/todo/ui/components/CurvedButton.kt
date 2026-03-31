@@ -23,6 +23,7 @@ import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.drawscope.Fill
 import androidx.compose.ui.graphics.drawscope.translate
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import io.shivam.todo.ui.theme.BodyXLarge
@@ -174,6 +175,7 @@ fun createBulgedPath(
 data class CurvedButtonConfig (
     val containerColor: Color = TodoColor.Primary.color,
     val contentColor : Color = TodoColor.Light.color,
+    val fontSize : TextUnit = 18.sp,
     val gradientShadowColor : Color = TodoColor.Primary.color.copy(alpha = 0.4f),
     val verticalBulgeFactor : Float = 8f,
     val cornerRadius : Float = 50f,

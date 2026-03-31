@@ -12,7 +12,8 @@ enum class TodoColor(val color: Color) {
     SoftCyan(Color(0xFFE8F5F0)), // Soft cyan
     LightBlue(Color(0xFFF0F8FF)),
     LightPrimary(Color(0xffEEE9FF)),
-    GreyBackground(Color(0xFFE0E0E0))
+    GreyBackground(Color(0xFFE0E0E0)),
+    Purple(Color(0XFFAB94FF)),
 
 
 

@@ -119,7 +119,7 @@ fun OnBoardingScreen() {
 fun TodoBackgroundScreen(
     modifier: Modifier = Modifier,
     shouldShowDotsAndIcon: Boolean = false,
-    content: @Composable () -> Unit = {}
+    content: @Composable BoxWithConstraintsScope.() -> Unit = {},
 ) {
 
     BoxWithConstraints(

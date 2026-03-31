@@ -17,4 +17,7 @@ sealed class NavRoute {
 
     @Serializable
     data object Home : NavRoute()
+
+    @Serializable
+    data object TaskScreen : NavRoute()
 }
