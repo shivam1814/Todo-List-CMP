@@ -1,0 +1,195 @@
+package io.shivam.todo.ui.components
+
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.offset
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Check
+import androidx.compose.material.icons.outlined.Close
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.ModalBottomSheet
+import androidx.compose.material3.Text
+import androidx.compose.material3.rememberModalBottomSheetState
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.tooling.preview.Preview
+import io.shivam.todo.data.model.TaskGroupCategory
+import io.shivam.todo.ui.animatedBottomBar.util.bounceClickable
+import io.shivam.todo.ui.theme.BodyLarge
+import io.shivam.todo.ui.theme.BodyXSmall
+import io.shivam.todo.ui.theme.Spacing
+import io.shivam.todo.ui.theme.TodoColor
+import io.shivam.todo.ui.uiutils.VSpacer
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+@Preview
+fun SelectGroupBottomSheet(
+    onDismiss: () -> Unit = {}
+) {
+
+    val sheetState = rememberModalBottomSheetState(
+        skipPartiallyExpanded = true
+    )
+
+
+    val selectedIndex = remember { mutableStateOf(TaskGroupCategory.DailyStudy) }
+
+    val items = listOf<TaskGroupCategory>(
+        TaskGroupCategory.DailyStudy,
+        TaskGroupCategory.OfficeProject
+    )
+
+    ModalBottomSheet(
+        containerColor = TodoColor.Light.color,
+        sheetState = sheetState,
+        onDismissRequest = onDismiss,
+        dragHandle = null
+    ) {
+
+        LazyColumn (
+            modifier = Modifier.padding(horizontal = Spacing.s4)
+        ) {
+            item {
+                BottomSheetHeader(
+                    onCancelClick = onDismiss
+                )
+                VSpacer(Spacing.s4)
+            }
+            itemsIndexed(
+                items = items
+            ) { index, category ->
+                BottomSheetItem(
+                    category = category,
+                    isSelected = category == selectedIndex.value,
+                    onClick = {
+                        selectedIndex.value = category
+                        onDismiss()
+                    }
+                )
+            }
+        }
+
+    }
+
+}
+
+@Composable
+fun BottomSheetHeader(
+    onCancelClick : () -> Unit
+) {
+    Column(
+        modifier = Modifier.padding(top = Spacing.s6)
+    ) {
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+            Text(
+                text = "Select Task Group",
+                style = BodyLarge().copy(
+                    fontWeight = FontWeight.Bold
+                )
+            )
+            Icon(
+                modifier = Modifier.bounceClickable(onClick = onCancelClick),
+                imageVector = Icons.Outlined.Close,
+                contentDescription = ""
+            )
+        }
+    }
+
+}
+
+@Composable
+fun BottomSheetItem(
+    isSelected: Boolean,
+    category: TaskGroupCategory = TaskGroupCategory.OfficeProject,
+    onClick: () -> Unit = {}
+) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .background(
+                color = if (isSelected)
+                    TodoColor.LightestBlue.color else TodoColor.Light.color,
+                shape = RoundedCornerShape(Spacing.s4)
+            )
+            .padding(vertical = Spacing.s4)
+            .bounceClickable(onClick = onClick), // make entire row clickable
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Row(
+            modifier = Modifier.padding(horizontal = Spacing.s3),
+            horizontalArrangement = Arrangement.spacedBy(Spacing.s2),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Box(
+                modifier = Modifier
+                    .size(Spacing.s8)
+                    .background(
+                        color = category.color.copy(alpha = 0.15f),
+                        shape = CircleShape
+                    ),
+                contentAlignment = Alignment.Center
+            ) {
+                Icon(
+                    imageVector = category.icon,
+                    contentDescription = category.displayName,
+                    tint = category.color,
+                    modifier = Modifier.size(Spacing.s4)
+                )
+            }
+            Column(horizontalAlignment = Alignment.Start) {
+                Text(
+                    text = "Task Group",
+                    style = BodyXSmall().copy(color = TodoColor.Secondary.color)
+                )
+                Text(
+                    modifier = Modifier.align(Alignment.Start).padding(end = Spacing.s20),
+                    text = category.displayName,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis,
+                    style = BodyLarge().copy(fontWeight = FontWeight.Bold, color = Color.Black)
+                )
+            }
+        }
+
+        if (isSelected) {
+            Box(
+                modifier = Modifier
+                    .size(Spacing.s8)
+                    .offset(x = -Spacing.s4)
+                    .background(
+                        color = TodoColor.LightBlue.color,
+                        shape = CircleShape
+                    ),
+                contentAlignment = Alignment.Center
+            ) {
+                Icon(
+                    imageVector = Icons.Default.Check,
+                    contentDescription = "Selected",
+                    tint = TodoColor.Primary.color,
+                )
+            }
+        }
+    }
+}

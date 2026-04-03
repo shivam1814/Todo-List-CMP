@@ -10,13 +10,14 @@ import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import io.shivam.todo.ui.screen.AddProject
 import io.shivam.todo.ui.screen.OnBoardingScreen
 import io.shivam.todo.ui.screen.TaskScreen
 import io.shivam.todo.ui.screen.homeScreen.HomeScreen
 
 @Composable
 fun AppNavHost(
-    startDestination: NavRoute = NavRoute.TaskScreen,
+    startDestination: NavRoute = NavRoute.AddProjectScreen,
     navController: NavHostController
 ) {
 
@@ -31,6 +32,7 @@ fun AppNavHost(
         composable<NavRoute.TodoList> {  }
         composable<NavRoute.Home> { HomeScreen() }
         composable<NavRoute.TaskScreen> { TaskScreen(navController) }
+        composable<NavRoute.AddProjectScreen> { AddProject() }
 
     }
 
