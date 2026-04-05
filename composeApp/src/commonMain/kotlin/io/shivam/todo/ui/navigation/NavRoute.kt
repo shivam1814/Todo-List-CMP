@@ -22,4 +22,7 @@ sealed class NavRoute {
     data object TaskScreen : NavRoute()
     @Serializable
     data object AddProjectScreen : NavRoute()
+
+    @Serializable
+    data object SettingsScreen : NavRoute()
 }
