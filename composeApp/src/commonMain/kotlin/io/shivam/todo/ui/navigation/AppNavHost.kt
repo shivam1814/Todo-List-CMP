@@ -15,10 +15,11 @@ import io.shivam.todo.ui.screen.OnBoardingScreen
 import io.shivam.todo.ui.screen.SettingsPage
 import io.shivam.todo.ui.screen.TaskScreen
 import io.shivam.todo.ui.screen.homeScreen.HomeScreen
+import io.shivam.todo.ui.screen.homeScreen.MostUsedCategoryScreen
 
 @Composable
 fun AppNavHost(
-    startDestination: NavRoute = NavRoute.SettingsScreen,
+    startDestination: NavRoute = NavRoute.SplashScreen,
     navController: NavHostController
 ) {
 
@@ -27,7 +28,9 @@ fun AppNavHost(
         startDestination = startDestination,
     ) {
 
-        composable<NavRoute.SplashScreen> { abc() }
+        composable<NavRoute.SplashScreen> {
+            MostUsedCategoryScreen()
+        }
         composable<NavRoute.Onboarding> { OnBoardingScreen() }
         composable<NavRoute.HomeScreen> {  }
         composable<NavRoute.TodoList> {  }
