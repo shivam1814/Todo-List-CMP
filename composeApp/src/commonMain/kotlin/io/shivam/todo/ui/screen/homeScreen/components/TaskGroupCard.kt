@@ -25,6 +25,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import io.shivam.todo.data.model.TaskGroup
 import io.shivam.todo.data.model.TaskGroupCategory
+import io.shivam.todo.ui.components.TodoElevatedCard
 import io.shivam.todo.ui.theme.BodyLarge
 import io.shivam.todo.ui.theme.BodySmall
 import io.shivam.todo.ui.theme.Spacing
@@ -43,19 +44,11 @@ fun TaskGroupCard(
     )
 ) {
 
-    Card(
-        modifier = Modifier
-            .fillMaxWidth()
-            .clip(RoundedCornerShape(Spacing.s4))
-//            .background(color = TodoColor.Primary.color)
-//            .padding(vertical = Spacing.s2)
-    ) {
-
+    TodoElevatedCard {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .background(color = TodoColor.Light.color)
-                .padding(Spacing.s4),
+                .background(color = TodoColor.Light.color),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween
         ) {

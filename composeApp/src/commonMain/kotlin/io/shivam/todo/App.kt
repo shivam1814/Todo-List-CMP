@@ -16,6 +16,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.rememberNavController
 import io.shivam.todo.ui.navigation.AppNavHost
+import io.shivam.todo.ui.screen.MainScreen
 import io.shivam.todo.ui.theme.TodoAppTheme
 import org.jetbrains.compose.resources.painterResource
 
@@ -25,11 +26,12 @@ import todo_list.composeapp.generated.resources.compose_multiplatform
 @Composable
 @Preview
 fun App() {
-    initKoin()
+
     TodoAppTheme {
         val navController = rememberNavController()
-        AppNavHost(
+        /*AppNavHost(
             navController = navController
-        )
+        )*/
+        MainScreen(navController)
     }
 }

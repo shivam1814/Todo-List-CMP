@@ -36,6 +36,7 @@ import io.shivam.todo.ui.theme.BodyXLarge
 import io.shivam.todo.ui.theme.Spacing
 import io.shivam.todo.ui.theme.TodoAppTheme
 import io.shivam.todo.ui.theme.TodoColor
+import io.shivam.todo.ui.uiutils.VSpacer
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.painterResource
 import todo_list.composeapp.generated.resources.Res
@@ -43,7 +44,7 @@ import todo_list.composeapp.generated.resources.calendar
 
 @Composable
 @Preview
-fun AddProject(navHostController: NavHostController = rememberNavController()) {
+fun AddProject(navHostController: NavHostController) {
 
     var openTaskGroupSelection by remember { mutableStateOf(false) }
     var textChange by remember { mutableStateOf("") }
@@ -167,12 +168,13 @@ fun AddProject(navHostController: NavHostController = rememberNavController()) {
 
 
                 // Take all the available Space below
-                Spacer(modifier = Modifier.weight(1f))
+                VSpacer(Spacing.s12)
 
 
                 CurvedButton (
                     modifier = Modifier,
-                    text = "Add Project"
+                    text = "Add Project",
+
                 ) {  }
 
 

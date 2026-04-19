@@ -49,7 +49,7 @@ fun TodoTopAppBar(
         Image(
             modifier = Modifier
                 .size(Spacing.s6)
-                .clickable { navController.navigateUp() },
+                .bounceClickable{ navController.navigateUp() },
             painter = painterResource(Res.drawable.arrow__left),
             contentDescription = null
         )

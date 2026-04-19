@@ -19,7 +19,7 @@ import io.shivam.todo.ui.screen.homeScreen.MostUsedCategoryScreen
 
 @Composable
 fun AppNavHost(
-    startDestination: NavRoute = NavRoute.SplashScreen,
+    startDestination: NavRoute = NavRoute.Home,
     navController: NavHostController
 ) {
 
@@ -29,15 +29,15 @@ fun AppNavHost(
     ) {
 
         composable<NavRoute.SplashScreen> {
-            MostUsedCategoryScreen()
+            MostUsedCategoryScreen(navController)
         }
         composable<NavRoute.Onboarding> { OnBoardingScreen() }
         composable<NavRoute.HomeScreen> {  }
         composable<NavRoute.TodoList> {  }
         composable<NavRoute.Home> { HomeScreen() }
         composable<NavRoute.TaskScreen> { TaskScreen(navController) }
-        composable<NavRoute.AddProjectScreen> { AddProject() }
-        composable<NavRoute.SettingsScreen> { SettingsPage() }
+        composable<NavRoute.AddProjectScreen> { AddProject(navController) }
+        composable<NavRoute.SettingsScreen> { SettingsPage(navController) }
 
     }
 

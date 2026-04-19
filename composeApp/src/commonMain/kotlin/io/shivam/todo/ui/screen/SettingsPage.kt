@@ -76,7 +76,7 @@ import todo_list.composeapp.generated.resources.user_octagon
 @Composable
 @Preview
 fun SettingsPage(
-    navController: NavHostController = rememberNavController()
+    navController: NavHostController
 ) {
 
     var name by remember { mutableStateOf("") }

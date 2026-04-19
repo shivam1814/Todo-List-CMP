@@ -34,37 +34,42 @@ fun CurvedButton(
     modifier: Modifier = Modifier,
     buttonConfig : CurvedButtonConfig = CurvedButtonConfig(),
     text: String = "",
+    isEnabled: Boolean = true,
     onClick: () -> Unit,
 ) {
     Box(
         modifier = modifier
             .wrapContentWidth()
             .height(56.dp)
-            .clickable(onClick = onClick),
+            .bounceClickable(
+                onClick = onClick,
+                enable = isEnabled
+            ),
         contentAlignment = Alignment.Center
     ) {
-        // Gradient Shadow
-        Canvas(
-            modifier = Modifier
-                .fillMaxSize()
-                .offset(y = 6.dp)
-                .blur(radius = 12.dp, edgeTreatment = BlurredEdgeTreatment.Unbounded)
-        ) {
-            val width = size.width
-            val height = size.height
+        if (isEnabled) {
+            Canvas(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .offset(y = 6.dp)
+                    .blur(radius = 12.dp, edgeTreatment = BlurredEdgeTreatment.Unbounded)
+            ) {
+                val width = size.width
+                val height = size.height
 
-            val path = createBulgedPath(
-                width = width,
-                height = height,
-                cornerRadius = buttonConfig.cornerRadius,
-                bulgeFactor = buttonConfig.verticalBulgeFactor
-            )
+                val path = createBulgedPath(
+                    width = width,
+                    height = height,
+                    cornerRadius = buttonConfig.cornerRadius,
+                    bulgeFactor = buttonConfig.verticalBulgeFactor
+                )
 
-            drawPath(
-                path = path,
-                color = buttonConfig.gradientShadowColor,
-                style = Fill
-            )
+                drawPath(
+                    path = path,
+                    color = buttonConfig.gradientShadowColor,
+                    style = Fill
+                )
+            }
         }
 
         // Custom button background with bulge
@@ -86,7 +91,8 @@ fun CurvedButton(
             translate(top = -2f) {
                 drawPath(
                     path = path,
-                    color = buttonConfig.containerColor,
+                    color = if(isEnabled) buttonConfig.containerColor
+                    else TodoColor.BorderGrey.color.copy(alpha = 0.5f),
                     style = Fill
                 )
             }
@@ -95,25 +101,28 @@ fun CurvedButton(
         // Button content
         Row(
             modifier = Modifier
-                .fillMaxSize()
-                .padding(horizontal = 24.dp),
+                .fillMaxSize(),
             horizontalArrangement = Arrangement.Center,
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
                 text = text,
                 style = BodyXLarge().copy(
+                    fontSize = buttonConfig.fontSize,
                     fontWeight = FontWeight.Bold,
-                    color = buttonConfig.contentColor
+                    color = if (isEnabled) buttonConfig.contentColor
+                    else TodoColor.Dark.color
                 ),
             )
-            Spacer(modifier = Modifier.width(8.dp))
-            if (buttonConfig.shouldShowArrow)  Text(
-                text = "→",
-                fontSize = 20.sp,
-                fontWeight = FontWeight.Normal,
-                color = buttonConfig.contentColor
-            )
+            if (buttonConfig.shouldShowArrow)  {
+                Spacer(modifier = Modifier.width(8.dp))
+                Text(
+                    text = "→",
+                    fontSize = 20.sp,
+                    fontWeight = FontWeight.Normal,
+                    color = buttonConfig.contentColor
+                )
+            }
         }
     }
 }

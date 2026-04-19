@@ -38,7 +38,7 @@ import io.shivam.todo.ui.uiutils.VSpacer
 
 @Composable
 @Preview
-fun TaskScreen(navController: NavController = rememberNavController()) {
+fun TaskScreen(navController: NavController) {
 
     val selected = remember { mutableStateOf("All") }
     val chips = listOf<String>(
@@ -101,18 +101,6 @@ fun TaskScreen(navController: NavController = rememberNavController()) {
                     ScheduleTaskCard()
                 }
             }
-
-        }
-
-
-        CurvedBottomNavigation(
-            modifier = Modifier.align(Alignment.BottomCenter),
-            items = navItems,
-            selectedIndex = 1,
-            showDot = false,
-            enableFabIconScale = true,
-            enableHapticFeedback = false
-        ) { index ->
 
         }
 

@@ -35,7 +35,7 @@ import kotlin.random.Random
 
 @Composable
 @Preview(showSystemUi = true)
-fun MostUsedCategoryScreen(navHostController: NavHostController = rememberNavController()) {
+fun MostUsedCategoryScreen(navHostController: NavHostController) {
 
     Scaffold(
         topBar = {

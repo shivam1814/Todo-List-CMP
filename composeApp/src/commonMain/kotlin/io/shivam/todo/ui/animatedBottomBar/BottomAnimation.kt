@@ -174,6 +174,16 @@ private fun CurvedBottomNavigationContent(
     var currentIndex by remember { mutableStateOf(selectedIndex) }
     var previousIndex by remember { mutableStateOf(selectedIndex) }
 
+
+    LaunchedEffect(selectedIndex){
+
+        if(selectedIndex != currentIndex) {
+            previousIndex = currentIndex
+            currentIndex = selectedIndex
+        }
+
+    }
+
     val screenWidth = componentWidth
     val cellWidth = screenWidth / items.size
 

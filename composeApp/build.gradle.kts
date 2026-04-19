@@ -32,6 +32,8 @@ kotlin {
         androidMain.dependencies {
             implementation(libs.compose.uiToolingPreview)
             implementation(libs.androidx.activity.compose)
+
+            implementation("io.insert-koin:koin-android:3.2.0")
         }
         commonMain.dependencies {
             implementation(libs.compose.runtime)
@@ -61,6 +63,11 @@ kotlin {
         commonTest.dependencies {
             implementation(libs.kotlin.test)
         }
+    }
+
+
+    sourceSets.all {
+        languageSettings.optIn("kotlin.time.ExperimentalTime")
     }
 }
 

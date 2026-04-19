@@ -17,21 +17,7 @@ import io.shivam.todo.ui.screen.homeScreen.components.navItems
 @Preview
 fun HomeScreen() {
     var selectedIndex by remember { mutableStateOf(0) }
-    Scaffold(
-        topBar = {},
-        bottomBar = {
-            CurvedBottomNavigation(
-                modifier = Modifier,
-                items = navItems,
-                selectedIndex = selectedIndex,
-                showDot = false,
-                enableHapticFeedback = false,
-                enableFabIconScale = true
-            ) { index ->
-                selectedIndex = index
-            }
-        }
-    ) {
+    Scaffold {
 
         TodoBackgroundScreen {
             HomePageContent()

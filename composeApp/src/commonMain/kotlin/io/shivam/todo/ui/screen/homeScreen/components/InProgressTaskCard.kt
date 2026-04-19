@@ -12,10 +12,12 @@ import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import io.shivam.todo.data.model.InProgressTask
 import io.shivam.todo.data.model.TaskCategory
 import io.shivam.todo.ui.theme.BodyLarge
@@ -40,6 +42,12 @@ fun InProgressTaskCard(
         modifier = Modifier
             .height(Spacing.s30)
             .width(Spacing.s55)
+            .shadow(
+                elevation = 6.dp,
+                shape = RoundedCornerShape(Spacing.s4),
+                ambientColor = TodoColor.Black.color.copy(alpha = 0.05f),
+                spotColor = TodoColor.Black.color.copy(alpha = 0.12f)
+            )
             .background(
                 color = task.category.backgroundColor,
                 shape = RoundedCornerShape(Spacing.s4)

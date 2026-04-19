@@ -2,11 +2,14 @@ package io.shivam.todo
 
 import io.shivam.todo.data.TodoRepositoryImpl
 import io.shivam.todo.domain.TodoRepository
+import org.koin.core.Koin
+import org.koin.core.KoinApplication
 import org.koin.core.context.startKoin
 import org.koin.core.context.stopKoin
+import org.koin.core.module.Module
 import org.koin.dsl.module
 
-private var isKoinInitialized = false
+private var koinRef: Koin? = null
 
 val appModule = module {
     single<TodoRepository> {
@@ -17,17 +20,20 @@ val appModule = module {
     }
 }
 
-fun initKoin() {
-    if (!isKoinInitialized) {
-        startKoin {
-            modules(appModule)
+fun initKoin(config: (KoinApplication) -> Unit = {}) {
+    if(koinRef == null) {
+        val app = startKoin {
+            config(this)
+            modules(appModule, platformModule())
         }
-        isKoinInitialized = false
     }
 }
 
+
 fun resetKoin() {
     stopKoin()
-    isKoinInitialized = false
+    koinRef = null
     initKoin()
 }
+
+expect fun platformModule() : Module
