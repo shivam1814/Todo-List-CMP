@@ -8,6 +8,8 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -15,15 +17,15 @@ import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
-import androidx.navigation.compose.rememberNavController
-import androidx.navigation.navOptions
 import io.shivam.todo.ui.components.SphereTextDemo
 import io.shivam.todo.ui.components.TodoTopAppBar
-import io.shivam.todo.ui.screen.ColoredDot
-import io.shivam.todo.ui.screen.TodoBackgroundScreen
+import io.shivam.todo.ui.screen.onBoarding.ColoredDot
+import io.shivam.todo.ui.screen.onBoarding.TodoBackgroundScreen
 import io.shivam.todo.ui.theme.Spacing
 import io.shivam.todo.ui.theme.TodoColor
+import io.shivam.todo.ui.viewModel.MostUsedCategoryViewModel
 import org.jetbrains.compose.resources.painterResource
+import org.koin.compose.koinInject
 import todo_list.composeapp.generated.resources.Res
 import todo_list.composeapp.generated.resources.blue_desk_calendar
 import todo_list.composeapp.generated.resources.blue_stopwatch_with_pink_arrow
@@ -34,23 +36,26 @@ import kotlin.collections.List
 import kotlin.random.Random
 
 @Composable
-@Preview(showSystemUi = true)
-fun MostUsedCategoryScreen(navHostController: NavHostController) {
+@Preview
+fun MostUsedCategoryScreen(
+    navHostController: NavHostController,
+    viewModel: MostUsedCategoryViewModel = koinInject()
+) {
+    val uiState by viewModel.uiState.collectAsState()
 
     Scaffold(
         topBar = {
             TodoTopAppBar(
                 modifier = Modifier.systemBarsPadding(),
-                title = "Most used categories",
+                title = "Most Used Categories",
                 navController = navHostController
             )
         }
     ) {
-
         TodoBackgroundScreen(
-            shouldShowDotsAndIcon = true
+            shouldShowDotsAndIcon = false
         ) {
-
+            // Random colored dots scattered across the screen
             val dotColors = listOf(
                 TodoColor.Pink.color,
                 TodoColor.Blue.color,
@@ -72,18 +77,16 @@ fun MostUsedCategoryScreen(navHostController: NavHostController) {
                 }
             }
 
-            randomDots.forEach { (color , xPercent , yPercent) ->
-
+            randomDots.forEach { (color, xPercent, yPercent) ->
                 ColoredDot(
                     color = color,
                     x = (maxWidth.value * xPercent).dp,
                     y = (maxHeight.value * yPercent).dp,
                     size = (Spacing.s1.value + Random.nextInt(6)).dp
                 )
-
             }
 
-            //Top left
+            // Top left
             Image(
                 painter = painterResource(Res.drawable.blue_stopwatch_with_pink_arrow),
                 contentDescription = null,
@@ -137,11 +140,11 @@ fun MostUsedCategoryScreen(navHostController: NavHostController) {
                 modifier = Modifier.fillMaxSize(),
                 contentAlignment = Alignment.TopCenter
             ) {
-                SphereTextDemo()
+                SphereTextDemo(
+                    labels = uiState.labels
+                )
             }
-            
+
         }
-
     }
-
 }

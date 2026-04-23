@@ -1,4 +1,4 @@
-package io.shivam.todo.ui.screen
+package io.shivam.todo.ui.screen.onBoarding
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -18,6 +18,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.BlurredEdgeTreatment
@@ -35,7 +36,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import io.shivam.todo.ui.components.CurvedButton
 import io.shivam.todo.ui.theme.TodoColor
+import io.shivam.todo.ui.viewModel.OnBoardingViewModel
+import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.painterResource
+import org.koin.compose.koinInject
 import todo_list.composeapp.generated.resources.Res
 import todo_list.composeapp.generated.resources.blue_desk_calendar
 import todo_list.composeapp.generated.resources.blue_stopwatch_with_pink_arrow
@@ -46,7 +50,12 @@ import todo_list.composeapp.generated.resources.vase_with_tulips__glasses_and_pe
 
 @Composable
 @Preview
-fun OnBoardingScreen() {
+fun OnBoardingScreen(
+    onOnboardingComplete: () -> Unit = {}
+) {
+
+    val onBoardingViewModel: OnBoardingViewModel = koinInject()
+    val scope = rememberCoroutineScope()
 
     TodoBackgroundScreen(
         shouldShowDotsAndIcon = true
@@ -100,7 +109,12 @@ fun OnBoardingScreen() {
 
                 // CTA Button
                 CurvedButton(
-                    onClick = {},
+                    onClick = {
+                        scope.launch {
+                            onBoardingViewModel.setUserStatus(false)
+                        }
+                        onOnboardingComplete()
+                    },
                     text = "Let's Start",
                     modifier = Modifier.fillMaxWidth()
                 )

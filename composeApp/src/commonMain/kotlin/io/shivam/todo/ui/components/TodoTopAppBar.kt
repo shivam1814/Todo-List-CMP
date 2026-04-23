@@ -24,61 +24,57 @@ import androidx.navigation.NavController
 import io.shivam.todo.ui.theme.BodyXLarge
 import io.shivam.todo.ui.theme.Spacing
 import io.shivam.todo.ui.theme.TodoColor
+import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.painterResource
 import todo_list.composeapp.generated.resources.Res
 import todo_list.composeapp.generated.resources.arrow__left
 import todo_list.composeapp.generated.resources.new_notification
 
 @Composable
-@Preview(showBackground = true)
 fun TodoTopAppBar(
     modifier: Modifier = Modifier,
     title: String = "Today's Tasks",
-    navController: NavController
+    navController: NavController,
+    actionImage : DrawableResource = Res.drawable.new_notification,
+    onActionClick : (() -> Unit)? = null
 ) {
-
-    val shouldShowNotificationDot = remember { mutableStateOf(true) }
+    val shouldShowNotificationDot = remember { mutableStateOf(false) }
     Row(
-        modifier = modifier.fillMaxWidth()
-            .height(Spacing.s14)
-            .padding(horizontal = Spacing.s4),
+        modifier = modifier.fillMaxWidth().height(Spacing.s14).padding(horizontal = Spacing.s4),
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically
     ) {
-
         Image(
             modifier = Modifier
                 .size(Spacing.s6)
-                .bounceClickable{ navController.navigateUp() },
+                .bounceClickable { navController.navigateUp() },
             painter = painterResource(Res.drawable.arrow__left),
-            contentDescription = null
+            contentDescription = ""
         )
         Text(
             text = title,
             style = BodyXLarge().copy(
-                fontWeight = FontWeight.Black
+                fontWeight = FontWeight.Black,
             )
         )
         Box(
-            modifier = Modifier.size(Spacing.s6)
+            modifier = Modifier
+                .size(Spacing.s6)
+                .bounceClickable {
+                    onActionClick?.invoke()
+                }
         ) {
             Image(
-                painter = painterResource(Res.drawable.new_notification),
+                painter = painterResource(actionImage),
                 contentDescription = null
             )
-            if (shouldShowNotificationDot.value) {
-                Box(
-                    modifier = Modifier.offset(x = -Spacing.s1)
-                        .size(Spacing.s2)
-                        .background(
-                            color = TodoColor.Primary.color,
-                            shape = CircleShape
-                        ).align(Alignment.TopEnd)
-                )
-            }
 
+            if(shouldShowNotificationDot.value) Box(
+                modifier = Modifier.offset(x = -Spacing.s1).size(Spacing.s2).background(
+                    color = TodoColor.Primary.color,
+                    shape = CircleShape
+                ).align (Alignment.TopEnd),
+            )
         }
-
     }
-
 }

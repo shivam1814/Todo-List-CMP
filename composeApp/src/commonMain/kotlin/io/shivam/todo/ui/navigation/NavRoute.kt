@@ -4,13 +4,12 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 sealed class NavRoute {
-    @Serializable
-    data object SplashScreen : NavRoute()
-    @Serializable
-    data object Onboarding : NavRoute()
 
     @Serializable
-    data object HomeScreen : NavRoute()
+    data object SplashScreen : NavRoute()
+
+    @Serializable
+    data object Onboarding : NavRoute()
 
     @Serializable
     data object TodoList : NavRoute()
@@ -20,9 +19,31 @@ sealed class NavRoute {
 
     @Serializable
     data object TaskScreen : NavRoute()
-    @Serializable
-    data object AddProjectScreen : NavRoute()
 
     @Serializable
-    data object SettingsScreen : NavRoute()
+    data object AddProject: NavRoute()
+
+    @Serializable
+    data object SettingsPage : NavRoute()
+
+    @Serializable
+    data object AboutUs : NavRoute()
+
+    @Serializable
+    data class EditTodo(val todoId: Long) : NavRoute()
+
+    @Serializable
+    data object TestScreen : NavRoute()
+}
+
+/**
+ * Root level navigation graph routes
+ */
+@Serializable
+sealed class RootNavGraph(val route: String) {
+    @Serializable
+    data object Onboarding : RootNavGraph("onboarding_graph")
+
+    @Serializable
+    data object Main : RootNavGraph("main_graph")
 }

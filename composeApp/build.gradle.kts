@@ -59,6 +59,10 @@ kotlin {
             implementation("io.coil-kt.coil3:coil-compose:3.3.0")
             implementation("io.coil-kt.coil3:coil-network-ktor3:3.3.0")
 
+            api(libs.datastore.preferences)
+            api(libs.datastore)
+
+
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)
@@ -104,5 +108,11 @@ android {
 
 dependencies {
     debugImplementation(libs.compose.uiTooling)
+
+    add("kspCommonMainMetadata", libs.androidx.room.compiler)
+    add("kspAndroid", libs.androidx.room.compiler)
+    add("kspIosSimulatorArm64", libs.androidx.room.compiler)
+    // add("kspIosX64", libs.androidx.room.compiler)
+    add("kspIosArm64", libs.androidx.room.compiler)
 }
 

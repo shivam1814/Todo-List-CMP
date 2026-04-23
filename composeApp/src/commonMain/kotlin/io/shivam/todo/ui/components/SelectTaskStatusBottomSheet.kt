@@ -30,34 +30,37 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
-import io.shivam.todo.data.model.TaskGroupCategory
-import io.shivam.todo.ui.animatedBottomBar.util.bounceClickable
+import io.shivam.todo.data.model.TaskStatus
 import io.shivam.todo.ui.theme.BodyLarge
 import io.shivam.todo.ui.theme.BodyXSmall
 import io.shivam.todo.ui.theme.Spacing
 import io.shivam.todo.ui.theme.TodoColor
 import io.shivam.todo.ui.uiutils.VSpacer
 
+data class TaskStatusOption(
+    val status: TaskStatus,
+    val displayName: String,
+    val color: Color
+)
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 @Preview
-fun SelectGroupBottomSheet(
+fun SelectTaskStatusBottomSheet(
+    selectedStatus: TaskStatus = TaskStatus.TO_DO,
     onDismiss: () -> Unit = {},
-    onCategorySelected: (TaskGroupCategory) -> Unit = {}
+    onStatusSelected: (TaskStatus) -> Unit = {}
 ) {
     val sheetState = rememberModalBottomSheetState(
         skipPartiallyExpanded = true
     )
 
-    // selection state: store selected index (or -1 for none)
-    val selectedIndex = remember { mutableStateOf(TaskGroupCategory.DailyStudy) }
+    val selectedIndex = remember { mutableStateOf(selectedStatus) }
 
-
-    val items = listOf<TaskGroupCategory>(
-        TaskGroupCategory.DailyStudy,
-        TaskGroupCategory.OfficeProject,
-        TaskGroupCategory.PersonalProject,
-        TaskGroupCategory.Other
+    val statusOptions = listOf(
+        TaskStatusOption(TaskStatus.TO_DO, "To Do", TodoColor.Primary.color),
+        TaskStatusOption(TaskStatus.IN_PROGRESS, "In Progress", TodoColor.Orange.color),
+        TaskStatusOption(TaskStatus.DONE, "Done", TodoColor.Emerald.color)
     )
 
     ModalBottomSheet(
@@ -66,24 +69,24 @@ fun SelectGroupBottomSheet(
         onDismissRequest = onDismiss,
         dragHandle = null
     ) {
-        LazyColumn (
+        LazyColumn(
             modifier = Modifier.padding(horizontal = Spacing.s4)
         ) {
             item {
-                BottomSheetHeader(
+                StatusBottomSheetHeader(
                     onCancelClick = onDismiss
                 )
                 VSpacer(Spacing.s4)
             }
             itemsIndexed(
-                items = items
-            ) { index, category ->
-                BottomSheetItem(
-                    category = category,
-                    isSelected = category == selectedIndex.value,
+                items = statusOptions
+            ) { _, statusOption ->
+                StatusBottomSheetItem(
+                    statusOption = statusOption,
+                    isSelected = statusOption.status == selectedIndex.value,
                     onClick = {
-                        selectedIndex.value = category
-                        onCategorySelected(category)
+                        selectedIndex.value = statusOption.status
+                        onStatusSelected(statusOption.status)
                     }
                 )
             }
@@ -92,8 +95,8 @@ fun SelectGroupBottomSheet(
 }
 
 @Composable
-fun BottomSheetHeader(
-    onCancelClick : () -> Unit
+fun StatusBottomSheetHeader(
+    onCancelClick: () -> Unit
 ) {
     Column(
         modifier = Modifier.padding(top = Spacing.s6)
@@ -103,7 +106,7 @@ fun BottomSheetHeader(
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
             Text(
-                text = "Select Task Group",
+                text = "Select Task Status",
                 style = BodyLarge().copy(
                     fontWeight = FontWeight.Bold
                 )
@@ -115,13 +118,12 @@ fun BottomSheetHeader(
             )
         }
     }
-
 }
 
 @Composable
-fun BottomSheetItem(
+fun StatusBottomSheetItem(
     isSelected: Boolean,
-    category: TaskGroupCategory = TaskGroupCategory.OfficeProject,
+    statusOption: TaskStatusOption,
     onClick: () -> Unit = {}
 ) {
     Row(
@@ -133,7 +135,7 @@ fun BottomSheetItem(
                 shape = RoundedCornerShape(Spacing.s4)
             )
             .padding(vertical = Spacing.s4)
-            .bounceClickable(onClick = onClick), // make entire row clickable
+            .bounceClickable(onClick = onClick),
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically
     ) {
@@ -146,26 +148,28 @@ fun BottomSheetItem(
                 modifier = Modifier
                     .size(Spacing.s8)
                     .background(
-                        color = category.color.copy(alpha = 0.15f),
+                        color = statusOption.color.copy(alpha = 0.15f),
                         shape = CircleShape
                     ),
                 contentAlignment = Alignment.Center
             ) {
-                Icon(
-                    imageVector = category.icon,
-                    contentDescription = category.displayName,
-                    tint = category.color,
-                    modifier = Modifier.size(Spacing.s4)
+                Box(
+                    modifier = Modifier
+                        .size(Spacing.s4)
+                        .background(
+                            color = statusOption.color,
+                            shape = CircleShape
+                        )
                 )
             }
             Column(horizontalAlignment = Alignment.Start) {
                 Text(
-                    text = "Task Group",
+                    text = "Task Status",
                     style = BodyXSmall().copy(color = TodoColor.Secondary.color)
                 )
                 Text(
                     modifier = Modifier.align(Alignment.Start).padding(end = Spacing.s20),
-                    text = category.displayName,
+                    text = statusOption.displayName,
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis,
                     style = BodyLarge().copy(fontWeight = FontWeight.Bold, color = Color.Black)
@@ -188,6 +192,7 @@ fun BottomSheetItem(
                     imageVector = Icons.Default.Check,
                     contentDescription = "Selected",
                     tint = TodoColor.Primary.color,
+                    modifier = Modifier.size(Spacing.s4)
                 )
             }
         }

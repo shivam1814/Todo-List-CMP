@@ -2,6 +2,7 @@ package io.shivam.todo.ui.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -33,6 +34,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import io.shivam.todo.data.model.ScheduleTaskModel
+import io.shivam.todo.data.model.TaskStatus
 import io.shivam.todo.ui.theme.BodyLarge
 import io.shivam.todo.ui.theme.BodyNormal
 import io.shivam.todo.ui.theme.BodySmall
@@ -45,9 +47,24 @@ import todo_list.composeapp.generated.resources.clock_loader_icon
 
 @Composable
 @Preview
-fun ScheduleTaskCard(task: ScheduleTaskModel = ScheduleTaskModel()) {
+fun ScheduleTaskCard(
+    task: ScheduleTaskModel = ScheduleTaskModel(),
+    onClick: () -> Unit = {}
+) {
 
     val category = task.category
+
+    val statusText = when (task.status) {
+        TaskStatus.TO_DO -> "To Do"
+        TaskStatus.IN_PROGRESS -> "In Progress"
+        TaskStatus.DONE -> "Done"
+    }
+
+    val statusColor = when (task.status) {
+        TaskStatus.TO_DO -> TodoColor.Primary.color
+        TaskStatus.IN_PROGRESS -> TodoColor.Orange.color
+        TaskStatus.DONE -> TodoColor.Emerald.color
+    }
 
     Box(
         modifier = Modifier
@@ -61,6 +78,7 @@ fun ScheduleTaskCard(task: ScheduleTaskModel = ScheduleTaskModel()) {
             )
             .clip(RoundedCornerShape(Spacing.s4))
             .background(Color.White)
+            .clickable(onClick = onClick)
             .padding(Spacing.s4)
     ) {
 
@@ -120,7 +138,7 @@ fun ScheduleTaskCard(task: ScheduleTaskModel = ScheduleTaskModel()) {
                 verticalAlignment = Alignment.CenterVertically
             ) {
 
-                TimeComp("10:00 AM")
+                TimeComp(task.scheduledTime)
             }
         }
 
@@ -128,17 +146,20 @@ fun ScheduleTaskCard(task: ScheduleTaskModel = ScheduleTaskModel()) {
             modifier = Modifier
                 .align(Alignment.BottomEnd)
                 .background(
-                    color = TodoColor.Purple.color.copy(alpha = 0.5f),
+                    color = statusColor.copy(alpha = 0.2f),
                     shape = RoundedCornerShape(
                         topStart = Spacing.s2,
                         bottomEnd = Spacing.s2
                     )
-                ).padding(Spacing.s1),
+                ).padding(horizontal = Spacing.s2, vertical = Spacing.s1),
             contentAlignment = Alignment.Center
         ) {
             Text(
-                text = "Done",
-                style = BodyXSmall().copy(color = TodoColor.Primary.color)
+                text = statusText,
+                style = BodyXSmall().copy(
+                    color = statusColor,
+                    fontWeight = FontWeight.SemiBold
+                )
             )
         }
     }

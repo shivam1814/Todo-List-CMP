@@ -32,11 +32,10 @@ import kotlin.time.ExperimentalTime
 @Preview
 fun DatePickerDialog(
     initialDate: LocalDate = Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault()).date,
-    onDateSelected: (LocalDate) -> Unit = {},
+    onDateSelected: (String) -> Unit = {},
     onDismiss: () -> Unit = {}
 ) {
     var selectedDate by remember { mutableStateOf(initialDate) }
-    var viewingMonth by remember { mutableStateOf(YearMonth(selectedDate.year, selectedDate.month)) }
 
 
     Dialog(onDismissRequest = onDismiss) {
@@ -45,14 +44,22 @@ fun DatePickerDialog(
             color = TodoColor.White.color
         ) {
             Column(modifier = Modifier) {
-                MonthCalendar()
+                MonthCalendar(
+                    selectedDate = selectedDate,
+                    onDateSelected = { date ->
+                        selectedDate = date
+                    }
+                )
                 Row(
                     Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.End
                 ) {
                     TextButton(onClick = onDismiss) { Text("Cancel") }
                     TextButton(onClick = {
-                        onDateSelected(selectedDate)
+                        // Format date as "dd MMM, yyyy" e.g., "17 Nov, 2025"
+                        val monthName = selectedDate.month.name.lowercase().replaceFirstChar { it.uppercase() }.take(3)
+                        val formattedDate = "${selectedDate.day} $monthName, ${selectedDate.year}"
+                        onDateSelected(formattedDate)
                         onDismiss()
                     }) { Text("OK") }
                 }

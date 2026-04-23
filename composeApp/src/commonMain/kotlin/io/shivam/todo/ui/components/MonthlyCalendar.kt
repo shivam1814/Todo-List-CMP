@@ -72,14 +72,16 @@ import kotlin.time.ExperimentalTime
 @OptIn(ExperimentalTime::class)
 @Composable
 @Preview
-fun MonthCalendar() {
+fun MonthCalendar(
+    selectedDate: LocalDate? = Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault()).date,
+    onDateSelected: (LocalDate) -> Unit = {}
+) {
     val currentMonth = remember { YearMonth.now() }
     val startMonth = remember { currentMonth.minusMonths(100) } // Adjust as needed
     val endMonth = remember { currentMonth.plusMonths(100) } // Adjust as needed
     val firstDayOfWeek = remember { firstDayOfWeekFromLocale() } // Available from the library
     val coroutineScope = rememberCoroutineScope()
     val daysOfWeek = remember { daysOfWeek() }
-    val today = Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault()).date
     val state =
         rememberCalendarState(
             startMonth = startMonth,
@@ -87,7 +89,6 @@ fun MonthCalendar() {
             firstVisibleMonth = currentMonth,
             firstDayOfWeek = firstDayOfWeek
         )
-    var selectedDate by remember { mutableStateOf<LocalDate?>(today) }
 
     Column(
         modifier = Modifier.padding(16.dp)
@@ -126,8 +127,8 @@ fun MonthCalendar() {
                         Day(
                             day,
                             isSelected = selectedDate == day.date,
-                        ) { day ->
-                            selectedDate = day.date
+                        ) { clickedDay ->
+                            onDateSelected(clickedDay.date)
                         }
                     }
                 )

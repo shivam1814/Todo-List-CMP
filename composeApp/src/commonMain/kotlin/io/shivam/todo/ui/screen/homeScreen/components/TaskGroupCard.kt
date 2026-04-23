@@ -34,50 +34,46 @@ import io.shivam.todo.ui.uiutils.HSpacer
 import io.shivam.todo.ui.uiutils.VSpacer
 
 @Composable
-@Preview(showBackground = false)
+@Preview(showBackground = true)
 fun TaskGroupCard(
     taskGroup: TaskGroup = TaskGroup(
-        id = "1",
-        category = TaskGroupCategory.OfficeProject,
-        taskCount = 23,
-        completionPercentage = 70
-    )
+        "1",
+        TaskGroupCategory.OfficeProject,
+        23,
+        100),
 ) {
-
+    val category = taskGroup.category
     TodoElevatedCard {
         Row(
             modifier = Modifier
-                .fillMaxWidth()
-                .background(color = TodoColor.Light.color),
+                .fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
-
             Row(
-                modifier = Modifier
-                    .weight(1f),
+                modifier = Modifier.weight(1f),
                 verticalAlignment = Alignment.CenterVertically
             ) {
-
                 Box(
-                    modifier = Modifier.size(Spacing.s8)
+                    modifier = Modifier
+                        .size(Spacing.s8)
                         .background(
-                            color = taskGroup.category.color.copy(alpha = 0.15f),
+                            color = category.color.copy(alpha = 0.15f),
                             shape = CircleShape
                         ),
                     contentAlignment = Alignment.Center
                 ) {
                     Icon(
-                        imageVector = taskGroup.category.icon,
-                        contentDescription = taskGroup.category.displayName,
-                        tint = taskGroup.category.color,
+                        imageVector = category.icon,
+                        contentDescription = category.displayName,
+                        tint = category.color,
                         modifier = Modifier.size(Spacing.s4)
                     )
                 }
                 HSpacer(Spacing.s4)
                 Column {
                     Text(
-                        text = taskGroup.category.displayName,
+                        text = category.displayName,
                         style = BodyLarge().copy(
                             fontWeight = FontWeight.SemiBold
                         )
@@ -90,7 +86,6 @@ fun TaskGroupCard(
                         )
                     )
                 }
-
             }
 
             Box(
@@ -98,26 +93,21 @@ fun TaskGroupCard(
                 contentAlignment = Alignment.Center
             ) {
                 CircularProgressIndicator(
+                    progress = { taskGroup.completionPercentage / 100f },
                     modifier = Modifier.size(Spacing.s18),
                     strokeWidth = 6.dp,
-                    progress = { taskGroup.completionPercentage / 100f },
-                    color = taskGroup.category.color,
-                    trackColor = taskGroup.category.color.copy(alpha = 0.2f)
+                    color = category.color,
+                    trackColor = category.color.copy(alpha = 0.2f)
                 )
                 Text(
                     text = "${taskGroup.completionPercentage}%",
-                    style = TextStyle(
-                        fontSize = 16.sp,
+                    style = BodyLarge().copy(
+                        fontSize = 12.sp,
                         fontWeight = FontWeight.Bold,
                         color = TodoColor.Dark.color
                     )
                 )
-
             }
-
         }
-
     }
-
-
 }

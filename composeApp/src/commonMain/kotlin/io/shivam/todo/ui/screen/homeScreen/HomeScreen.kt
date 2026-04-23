@@ -6,21 +6,18 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import io.shivam.todo.ui.animatedBottomBar.CurvedBottomNavigation
-import io.shivam.todo.ui.screen.TodoBackgroundScreen
+import androidx.navigation.NavController
+import io.shivam.todo.ui.screen.onBoarding.TodoBackgroundScreen
 import io.shivam.todo.ui.screen.homeScreen.components.HomePageContent
-import io.shivam.todo.ui.screen.homeScreen.components.navItems
 
 @Composable
 @Preview
-fun HomeScreen() {
-    var selectedIndex by remember { mutableStateOf(0) }
+fun HomeScreen(navController: NavController) {
     Scaffold {
 
         TodoBackgroundScreen {
-            HomePageContent()
+            HomePageContent(navController)
         }
 
     }

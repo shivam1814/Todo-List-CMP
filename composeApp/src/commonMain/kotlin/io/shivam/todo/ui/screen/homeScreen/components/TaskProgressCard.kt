@@ -28,7 +28,11 @@ import io.shivam.todo.ui.uiutils.VSpacer
 
 @Composable
 @Preview(showBackground = true)
-fun TaskProgressCard() {
+fun TaskProgressCard(
+    progress: Float = 0.7f,
+    onViewTaskClick: () -> Unit = {}
+) {
+    val progressPercentage = (progress * 100).toInt()
 
     Box(
         modifier = Modifier
@@ -38,19 +42,17 @@ fun TaskProgressCard() {
                 shape = RoundedCornerShape(Spacing.s6)
             )
             .padding(Spacing.s6)
-    ) {
-
+    ){
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
-
-            Column(
+            Column (
                 modifier = Modifier.weight(1f)
             ) {
                 Text(
-                    text = "Your Today's task \nalmost done",
+                    text = "Your Today's task \n almost done",
                     style = BodyLarge().copy(
                         color = TodoColor.Light.color
                     )
@@ -58,7 +60,7 @@ fun TaskProgressCard() {
                 VSpacer(Spacing.s6)
                 CurvedButton(
                     modifier = Modifier,
-                    onClick = {},
+                    onClick = onViewTaskClick,
                     text = "View Task",
                     buttonConfig = CurvedButtonConfig(
                         cornerRadius = 40f,
@@ -68,38 +70,29 @@ fun TaskProgressCard() {
                         gradientShadowColor = Color.Transparent
                     )
                 )
-
             }
-
             HSpacer(Spacing.s6)
 
-            //progressbar
+            //progress bar
             Box(
-                modifier = Modifier
-                    .size(Spacing.s25),
+                modifier = Modifier.size(Spacing.s25),
                 contentAlignment = Alignment.Center
             ) {
-
                 CircularProgressIndicator(
-                    progress = { 0.7f },
+                    progress = { progress },
                     modifier = Modifier.size(Spacing.s25),
                     strokeWidth = Spacing.s2,
                     color = Color.White,
                     trackColor = Color.White.copy(alpha = 0.2f)
                 )
                 Text(
-                    text = "70%",
+                    text = "$progressPercentage%",
                     style = BodyXLarge().copy(
                         fontWeight = FontWeight.Bold,
                         color = TodoColor.Light.color
                     )
                 )
-
             }
-
         }
-
-
     }
-
 }

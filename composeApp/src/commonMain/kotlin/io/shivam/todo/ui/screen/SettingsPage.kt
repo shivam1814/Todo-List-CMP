@@ -1,6 +1,5 @@
 package io.shivam.todo.ui.screen
 
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -53,14 +52,13 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
-import androidx.navigation.compose.rememberNavController
 import coil3.compose.AsyncImage
 import io.github.ismoy.imagepickerkmp.domain.models.GalleryPhotoResult
 import io.github.ismoy.imagepickerkmp.presentation.ui.components.GalleryPickerLauncher
-import io.ktor.sse.SPACE
 import io.shivam.todo.ui.components.TodoElevatedCard
 import io.shivam.todo.ui.components.TodoTopAppBar
 import io.shivam.todo.ui.components.bounceClickable
+import io.shivam.todo.ui.screen.onBoarding.TodoBackgroundScreen
 import io.shivam.todo.ui.theme.BodyLarge
 import io.shivam.todo.ui.theme.BodyNormal
 import io.shivam.todo.ui.theme.BodySmall

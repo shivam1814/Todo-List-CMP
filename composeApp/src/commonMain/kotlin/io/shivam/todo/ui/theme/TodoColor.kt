@@ -3,7 +3,6 @@ package io.shivam.todo.ui.theme
 import androidx.compose.ui.graphics.Color
 
 enum class TodoColor(val color: Color) {
-
     Primary(Color(0xFF5F33E1)),
     Purple(Color(0XFFAB94FF)),
     Secondary(Color(0xFF6E6A7C)),
@@ -17,10 +16,10 @@ enum class TodoColor(val color: Color) {
     LightestBlue(Color(0xffE8F2FC)),
     LightPrimary(Color(0xffEEE9FF)),
     GreyBackground(Color(0xFFE0E0E0)),
-
     BorderGrey(Color(0xFFD0D7DE)),
     SkyBlue(Color(0xFF6CB4EE)),
     Pink(Color(0xFFFF6B9D)),
+    Error(Color(0xFFDC362E)),
     Blue(Color(0xFF4A90E2)),
     Emerald(Color(0xFF50C878)),
     Orange(Color(0xFFFFA500)),
@@ -28,7 +27,4 @@ enum class TodoColor(val color: Color) {
     Turquoise(Color(0xFF00CED1)),
     Gold(Color(0xFFFFD700)),
     DarkPurple(Color(0xFF9370DB))
-
-
-
 }

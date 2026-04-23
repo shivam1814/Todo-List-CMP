@@ -31,13 +31,11 @@ import io.shivam.todo.ui.uiutils.VSpacer
 fun InProgressTaskCard(
     task: InProgressTask = InProgressTask(
         id = "1",
-        title = "Working on jetpack compose",
-        category = TaskCategory.Office,
-        progressPercentage = 0.3f,
+        title = "Working on Jetpack Compose",
+        category = TaskCategory.Personal,
+        progressPercentage = 0.5f,
     )
 ) {
-
-
     Box(
         modifier = Modifier
             .height(Spacing.s30)
@@ -53,8 +51,7 @@ fun InProgressTaskCard(
                 shape = RoundedCornerShape(Spacing.s4)
             )
             .padding(Spacing.s4)
-    ) {
-
+    ){
         Column(
             modifier = Modifier.fillMaxWidth()
         ) {
@@ -65,6 +62,7 @@ fun InProgressTaskCard(
                 )
             )
             VSpacer(Spacing.s2)
+            //Task Title
             Text(
                 text = task.title,
                 maxLines = 2,
@@ -81,12 +79,8 @@ fun InProgressTaskCard(
                 trackColor = TodoColor.GreyBackground.color,
                 color = task.category.progressColor
             )
-
         }
-
     }
-
-
 }
 
 

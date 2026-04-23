@@ -41,18 +41,30 @@ import kotlinx.datetime.plus
 import kotlinx.datetime.toLocalDateTime
 import kotlin.math.abs
 import kotlin.time.Clock
+import kotlin.time.ExperimentalTime
 
+@OptIn(ExperimentalTime::class)
 @Composable
-@Preview
-fun CarousalCalendar() {
+fun CarousalCalendar(
+    initialSelectedDate: LocalDate? = null,
+    onDateSelected: (LocalDate) -> Unit = {}
+) {
+    //// Clock.System.now() -> Output: 2025-11-15T14:30:45.123456789Z
+    ////                        (Year-Month-Day T Hour:Minute:Second.Nanoseconds Z for UTC)
 
+
+    //// Output: 2025-11-15T20:00:45.123456789 (if you're in IST, UTC+5:30)
     val today = Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault()).date
 
-    val year = today.year
+    // Output: 2025-11-15
 
+    val year = today.year // 2025
+
+    // Always start from 1st January
     val startDate = LocalDate(year, 1, 1)
     val endDate = LocalDate(year, 12, 31)
 
+    // Generate full year date list
     val dates = remember {
         generateSequence(startDate) { date ->
             val next = date.plus(1, DateTimeUnit.DAY)
@@ -60,7 +72,8 @@ fun CarousalCalendar() {
         }.toList()
     }
 
-    var selectedDate by remember { mutableStateOf(today) }
+    // Selected item is today's date (even though list starts at Jan 1)
+    var selectedDate by remember { mutableStateOf(initialSelectedDate ?: today) }
 
     BoxWithConstraints(
         modifier = Modifier.fillMaxWidth()
@@ -68,14 +81,14 @@ fun CarousalCalendar() {
         DialerWeekCalendar(
             dates = dates,
             selectedDate = selectedDate,
-            onDateSelected = { selectedDate = it },
+            onDateSelected = {
+                selectedDate = it
+                onDateSelected(it)
+            },
             maxWidth = maxWidth
         )
     }
-
 }
-
-
 @Composable
 fun DialerWeekCalendar(
     modifier: Modifier = Modifier,
@@ -84,32 +97,43 @@ fun DialerWeekCalendar(
     onDateSelected: (LocalDate) -> Unit,
     maxWidth: Dp,
 ) {
+    /*
+    * The LazyListState is used here because the calendar uses a LazyRow (line 106), which is a lazy composable that only renders visible items.
 
+        rememberLazyListState() provides:
+        Scroll position tracking: Monitors which items are currently visible in the viewport
+        Layout information: Access to layoutInfo
+        * dimensions and visible item positions—essential for calculating the 3D rotation and scaling effects based on each item's distance from center
+        Scroll control: Enables scrollToItem() and animateScrollToItem() to programmatically center the selected date
+        Without it, we wouldn't be able to detect item positions or programmatically scroll to the selected date.
+    *
+    * */
     val listState = rememberLazyListState()
-    var isInitialLoad by remember { mutableStateOf(false) }
+    var isInitialLoad by remember { mutableStateOf(true) }
 
+    // Auto-scroll to center the selected date
     LaunchedEffect(selectedDate) {
         val selectedIndex = dates.indexOf(selectedDate)
         if (selectedIndex != -1) {
             if (isInitialLoad) {
-                listState.scrollToItem(selectedIndex)
+                listState.scrollToItem(index = selectedIndex)
                 isInitialLoad = false
             } else {
+                // Animate scroll for subsequent selections
                 listState.animateScrollToItem(index = selectedIndex)
             }
         }
-
     }
 
     LazyRow(
-        modifier = Modifier.fillMaxWidth()
+        modifier = modifier
+            .fillMaxWidth()
             .height(Spacing.s30),
         state = listState,
         horizontalArrangement = Arrangement.spacedBy(Spacing.s3),
         verticalAlignment = Alignment.CenterVertically,
-        contentPadding = PaddingValues(horizontal = (maxWidth/2) - 46.dp)
+        contentPadding = PaddingValues(horizontal = (maxWidth / 2) - 46.dp)
     ) {
-
         items(dates.size) { index ->
             val date = dates[index]
 
@@ -139,6 +163,7 @@ fun DialerWeekCalendar(
                         this.rotationY = if (itemCenter < viewportCenter) rotationY else -rotationY
                         this.alpha = alpha
                     }
+
                     .clip(RoundedCornerShape(Spacing.s4))
                     .background(
                         if (date == selectedDate) TodoColor.Primary.color
@@ -180,11 +205,8 @@ fun DialerWeekCalendar(
                     )
                 }
             }
-
         }
-
     }
-
 }
 
 

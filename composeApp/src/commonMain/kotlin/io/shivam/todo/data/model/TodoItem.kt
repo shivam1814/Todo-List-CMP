@@ -9,16 +9,23 @@ import kotlin.time.ExperimentalTime
 import kotlin.time.Instant
 
 @OptIn(ExperimentalTime::class)
+@TypeConverters(TodoTypeConverters::class)
 @Entity(tableName = "TodoItem")
-data class TodoItem(
-    @PrimaryKey
+data class TodoItem (
+
+    @PrimaryKey(autoGenerate = true)
     val id: Long = 0,
     val title: String,
     val description: String = "",
     val completed: Boolean = false,
+
+    // Status tracking
     val status: TaskStatus = TaskStatus.TO_DO,
+
+    // Category and grouping
     val category: TaskCategory = TaskCategory.Other,
     val groupCategory: TaskGroupCategory = TaskGroupCategory.Other,
+
     // Progress tracking
     val progressPercentage: Float = 0f,
 
@@ -37,7 +44,6 @@ data class TodoItem(
     val tags: List<String> = emptyList(),
     val notes: String? = null
 )
-
 
 /**
  * Task status enum to track the current state of a todo item
@@ -58,13 +64,15 @@ enum class TaskPriority {
     URGENT
 }
 
+
+@OptIn(ExperimentalTime::class)
 object TodoTypeConverters {
 
-    @TypeConverters
-    fun fromInstant(value: Instant): Long? = value?.toEpochMilliseconds()
+    @TypeConverter
+    fun fromInstant(value: Instant?): Long? = value?.toEpochMilliseconds()
 
-    @TypeConverters
-    fun toInstant(value: Long?) : Instant? = value?.let (Instant::fromEpochMilliseconds)
+    @TypeConverter
+    fun toInstant(value: Long?): Instant? = value?.let(Instant::fromEpochMilliseconds)
 
     @TypeConverter
     fun fromTaskStatus(value: TaskStatus?): String? = value?.name
@@ -96,6 +104,4 @@ object TodoTypeConverters {
     @TypeConverter
     fun toTags(value: String): List<String> =
         if (value.isBlank()) emptyList() else value.split("|").map { it.trim() }
-
-
 }
