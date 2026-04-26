@@ -98,7 +98,16 @@ This project showcases:
 
 ## 📸 Screenshots
 
-- screenshots
+<p align="start">
+  <img src="screenshot/Screenshot_1777207352.png" width="80">
+  <img src="screenshot/Screenshot_1777207358.png" width="80">
+  <img src="screenshot/Screenshot_1777207366.png" width="80">
+  <img src="screenshot/Screenshot_1777207373.png" width="80">
+  <img src="screenshot/Screenshot_1777207380.png" width="80">
+  <img src="screenshot/Screenshot_1777207389.png" width="80">
+  <img src="screenshot/Screenshot_1777207393.png" width="80">
+  <img src="screenshot/Screenshot_1777207405.png" width="80">
+</p>
 
 ---
 
