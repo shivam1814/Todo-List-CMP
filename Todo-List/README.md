@@ -1,35 +1,110 @@
-This is a Kotlin Multiplatform project targeting Android, iOS.
+# 🚀 CMP Todo — Cross-Platform Todo App
 
-* [/composeApp](./composeApp/src) is for code that will be shared across your Compose Multiplatform applications.
-  It contains several subfolders:
-  - [commonMain](./composeApp/src/commonMain/kotlin) is for code that’s common for all targets.
-  - Other folders are for Kotlin code that will be compiled for only the platform indicated in the folder name.
-    For example, if you want to use Apple’s CoreCrypto for the iOS part of your Kotlin app,
-    the [iosMain](./composeApp/src/iosMain/kotlin) folder would be the right place for such calls.
-    Similarly, if you want to edit the Desktop (JVM) specific part, the [jvmMain](./composeApp/src/jvmMain/kotlin)
-    folder is the appropriate location.
-
-* [/iosApp](./iosApp/iosApp) contains iOS applications. Even if you’re sharing your UI with Compose Multiplatform,
-  you need this entry point for your iOS app. This is also where you should add SwiftUI code for your project.
-
-### Build and Run Android Application
-
-To build and run the development version of the Android app, use the run configuration from the run widget
-in your IDE’s toolbar or build it directly from the terminal:
-- on macOS/Linux
-  ```shell
-  ./gradlew :composeApp:assembleDebug
-  ```
-- on Windows
-  ```shell
-  .\gradlew.bat :composeApp:assembleDebug
-  ```
-
-### Build and Run iOS Application
-
-To build and run the development version of the iOS app, use the run configuration from the run widget
-in your IDE’s toolbar or open the [/iosApp](./iosApp) directory in Xcode and run it from there.
+A modern Todo application built using **Kotlin and Jetpack Compose Multiplatform**, supporting both **Android and iOS**. This project focuses on delivering a **high-quality UI/UX experience** while following **Clean Architecture principles** and scalable development practices.
 
 ---
 
-Learn more about [Kotlin Multiplatform](https://www.jetbrains.com/help/kotlin-multiplatform-dev/get-started.html)…
+## ✨ Features
+
+- Add, update, and delete tasks
+- Track task completion status
+- Filter tasks by selected date
+- Custom animated calendar view
+- Categorized task management
+- Most-used categories visualization (dynamic UI)
+- User profile management
+- Onboarding flow for first-time users
+- Settings section with feedback and app info
+
+---
+
+## 📱 App Flow
+
+### Onboarding
+- Introductory screens for new users
+
+### Home Screen (Custom Bottom Navigation)
+
+Includes the following sections:
+
+#### 🏠 Home
+- Displays today's task progress
+- Tasks grouped by categories
+
+#### 📅 Tasks
+- Custom animated calendar
+- Select any date to view that day’s tasks
+
+#### ➕ Add Task
+- Create tasks with:
+    - Title
+    - Description
+    - Category
+    - Start & end date
+
+#### 🔵 Categories
+- Displays most-used categories
+- Interactive sphere-style animated UI
+
+#### ⚙️ Settings
+- View and update user profile
+- Shows total number of tasks
+- Sections: About, Feedback, Report Bug
+
+---
+
+## 🏗️ Tech Stack
+
+- **Language:** Kotlin
+- **UI:** Jetpack Compose + Compose Multiplatform
+- **Architecture:** Clean Architecture
+- **Dependency Injection:** Koin
+- **Database:** Room DB
+- **Platforms:** Android & iOS
+
+---
+
+## 🧱 Architecture
+
+The project follows Clean Architecture:
+
+### Presentation Layer
+- Screens
+- ViewModels
+- Navigation
+- Components
+
+### Domain Layer
+- Repository
+
+### Data Layer
+- Repository Implementation
+- Room Database
+
+This structure ensures better scalability, testability, and maintainability.
+
+---
+
+## 🎯 Purpose
+
+This project showcases:
+
+- Cross-platform development using Compose Multiplatform
+- Advanced UI design and animations
+- Structured and scalable architecture
+- Real-world app development approach
+
+---
+
+## 📸 Screenshots
+
+- screenshots
+
+---
+
+## 🛠️ Setup
+
+```bash
+git clone https://github.com/shivam1814/Todo-List-CMP.git
+Open in Android Studio
+Build and run on Android or iOS
