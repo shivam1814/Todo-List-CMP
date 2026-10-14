@@ -18,6 +18,21 @@ A modern Todo application built using **Kotlin and Jetpack Compose Multiplatform
 
 ---
 
+## 📸 Screenshots
+
+<p align="start">
+  <img src="screenshot/Screenshot_1777207352.png" width="80">
+  <img src="screenshot/Screenshot_1777207358.png" width="80">
+  <img src="screenshot/Screenshot_1777207366.png" width="80">
+  <img src="screenshot/Screenshot_1777207373.png" width="80">
+  <img src="screenshot/Screenshot_1777207380.png" width="80">
+  <img src="screenshot/Screenshot_1777207389.png" width="80">
+  <img src="screenshot/Screenshot_1777207393.png" width="80">
+  <img src="screenshot/Screenshot_1777207405.png" width="80">
+</p>
+
+---
+
 ## 📱 App Flow
 
 ### Onboarding
@@ -94,20 +109,7 @@ This project showcases:
 - Structured and scalable architecture
 - Real-world app development approach
 
----
 
-## 📸 Screenshots
-
-<p align="start">
-  <img src="screenshot/Screenshot_1777207352.png" width="80">
-  <img src="screenshot/Screenshot_1777207358.png" width="80">
-  <img src="screenshot/Screenshot_1777207366.png" width="80">
-  <img src="screenshot/Screenshot_1777207373.png" width="80">
-  <img src="screenshot/Screenshot_1777207380.png" width="80">
-  <img src="screenshot/Screenshot_1777207389.png" width="80">
-  <img src="screenshot/Screenshot_1777207393.png" width="80">
-  <img src="screenshot/Screenshot_1777207405.png" width="80">
-</p>
 
 ---
 
